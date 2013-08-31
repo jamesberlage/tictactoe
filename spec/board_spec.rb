@@ -31,13 +31,77 @@ describe Board do
 
   end
 
-  describe "#add_piece" do
+  describe "#[]=" do
 
     it "adds an X to the board" do
-      board.add_piece(:x,[0,2])
+      board[[0,2]] = :x
       expect(board.rows[0][2]).to eq(:x)
     end
 
   end
 
+  describe "#[]" do
+
+    it "gets the right symbol" do
+      test = Board.new([[nil, nil, :o],[nil, nil, :x],[nil, nil, nil]])
+      expect(test[[0,2]]).to eq(:o)
+    end
+
+  end
+
+  describe "#winning_board?" do
+
+    it "finds a diagonal win" do
+      test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :x]])
+      expect(test.winning_board?).to be_true
+    end
+
+    it "finds a horizontal win" do
+      test = Board.new([[:x, nil, :x],[:o, :o, :o],[nil, nil, :x]])
+      expect(test.winning_board?).to be_true
+    end
+
+    it "finds a vertical win" do
+      test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :o]])
+      expect(test.winning_board?).to be_true
+    end
+
+    it "returns false when the game is not won" do
+      test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, nil]])
+      expect(test.winning_board?).to be_false
+    end
+
+  end
+
+  describe "get_winning_symbol" do
+
+    it "returns the correct symbol of the winner" do
+      test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :x]])
+      expect(test.get_winning_symbol).to eq(:x)
+    end
+
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
