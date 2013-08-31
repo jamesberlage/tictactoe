@@ -1,4 +1,4 @@
-require 'player'
+require './lib/player'
 
 class HumanPlayer < Player
 
@@ -6,7 +6,7 @@ class HumanPlayer < Player
     loc = get_location_of_move
     move(loc)
 
-    rescue "space is already occupied"
+    rescue InvalidSpaceError
       puts "\nYou can't move into that space."
       retry
   end
@@ -15,13 +15,16 @@ class HumanPlayer < Player
     puts "\nWhat square would you like to take?"
     ans = gets.chomp
 
-    raise "invalid answer format" unless /^[0-2][,|\s]\s?[0-2]$/ === ans
+    raise InvalidAnswerError.new("invalid answer format") unless /^[0-2][,|\s]\s?[0-2]$/ === ans
 
     ans.split(/[,|\s]\s?/).map(&:to_i)
 
-    rescue "invalid answer format"
+    rescue InvalidAnswerError
       puts "\nSorry, I couldn't understand that answer.  Try putting it in the form 'x, y'."
       retry
   end
 
+end
+
+class InvalidAnswerError < RuntimeError
 end

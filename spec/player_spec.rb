@@ -21,7 +21,7 @@ describe Player do
     it "should raise an error when the space is already occupied" do
       test = Board.new([[nil, nil, :o],[nil, nil, :x],[nil, nil, nil]])
       player.board = test
-      expect { player.move([0,2]) }.to raise_error("space is already occupied")
+      expect { player.move([2,0]) }.to raise_error("space is already occupied")
     end
 
   end

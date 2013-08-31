@@ -1,4 +1,4 @@
-require 'board'
+require './lib/board'
 
 class Player
 
@@ -9,8 +9,11 @@ class Player
   end
 
   def move(loc)
-    raise "space is already occupied" unless @board[loc].nil?
+    raise InvalidSpaceError.new("space is already occupied") unless @board[loc].nil?
     @board[loc] = @symbol
   end
 
+end
+
+class InvalidSpaceError < RuntimeError
 end

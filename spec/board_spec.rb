@@ -35,7 +35,7 @@ describe Board do
 
     it "adds an X to the board" do
       board[[0,2]] = :x
-      expect(board.rows[0][2]).to eq(:x)
+      expect(board.rows[2][0]).to eq(:x)
     end
 
   end
@@ -44,7 +44,7 @@ describe Board do
 
     it "gets the right symbol" do
       test = Board.new([[nil, nil, :o],[nil, nil, :x],[nil, nil, nil]])
-      expect(test[[0,2]]).to eq(:o)
+      expect(test[[2,0]]).to eq(:o)
     end
 
   end
@@ -87,7 +87,7 @@ describe Board do
 
   end
 
-  describe "get_winning_symbol" do
+  describe "#get_winning_symbol" do
 
     it "returns the correct symbol of the winner" do
       test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :x]])

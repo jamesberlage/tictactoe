@@ -44,12 +44,12 @@ class Board
 
   def [](loc)
     x_coord, y_coord = loc[0], loc[1]
-    @rows[x_coord][y_coord]
+    @rows[y_coord][x_coord]
   end
 
   def []=(loc, sym)
     x_coord, y_coord = loc[0], loc[1]
-    @rows[x_coord][y_coord] = sym
+    @rows[y_coord][x_coord] = sym
   end
 
   def line_wins?(line_coords)
