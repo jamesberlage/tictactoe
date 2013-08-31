@@ -14,7 +14,7 @@ class TreeNode
   end
 
   def parent=(other_node)
-    raise "can't add a parent unless they claim you as their child" if !other_node.children.include?(self)
+    raise "can't add a parent unless they claim you as their child" unless other_node.children.include?(self)
 
     @parent = other_node
   end
