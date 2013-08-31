@@ -26,6 +26,12 @@ class Board
     end.chomp
   end
 
+  def full?
+    @rows.none? do |row|
+      row.any? { |el| el.nil? }
+    end
+  end
+
   def winning_board?
     LINES.any? { |line| line_wins?(line) }
   end

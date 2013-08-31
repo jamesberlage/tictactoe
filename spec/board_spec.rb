@@ -49,6 +49,20 @@ describe Board do
 
   end
 
+  describe "#full?" do
+
+    it "identfies a full board" do
+      test = Board.new([[:x, :x, :o],[:o, :o, :x],[:x, :o, :x]])
+      expect(test.full?).to be_true
+    end
+
+    it "doesn't misidentify a board" do
+      test = Board.new([[nil, nil, :o],[nil, nil, :x],[nil, nil, nil]])
+      expect(test.full?).to be_false
+    end
+
+  end
+
   describe "#winning_board?" do
 
     it "finds a diagonal win" do
