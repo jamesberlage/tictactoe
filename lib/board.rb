@@ -17,6 +17,16 @@ class Board
     @rows = rows.nil? ? Array.new(3) { Array.new(3) } : rows
   end
 
+  def dup
+    new_rows = []
+
+    @rows.each do |row|
+      new_rows << row.dup
+    end
+
+    Board.new(new_rows)
+  end
+
   def to_s
     "  0 1 2\n".tap do |rendered|
       @rows.each_with_index do |row, i|
@@ -32,13 +42,41 @@ class Board
     end
   end
 
-  def winning_board?
-    LINES.any? { |line| line_wins?(line) }
+  # A.I. ----------------------------------------------------------------------
+
+  def winning_board?(player_symbol)
+    LINES.any? do |line|
+      line_hash = get_line_hash(line)
+      line_hash[player_symbol] == 2 && line_hash[nil] == 1
+    end
+  end
+
+  def losing_board?(player_symbol)
+    winning_board?(switch_symbols(player_symbol))
+  end
+
+  def get_line_hash(line)
+    {}.tap do |line_hash|
+      line.each do |loc|
+        line_hash[self[loc]] ||= 0
+        line_hash[self[loc]] += 1
+      end
+    end
+  end
+
+  def switch_symbols(symbol)
+    symbol == :x ? :o : :x
+  end
+
+  # ---------------------------------------------------------------------------
+
+  def won?
+    LINES.any? { |line| line_won?(line) }
   end
 
   def get_winning_symbol
     LINES.each do |line|
-      return self[line.first] if line_wins?(line)
+      return self[line.first] if line_won?(line)
     end
   end
 
@@ -52,7 +90,7 @@ class Board
     @rows[y_coord][x_coord] = sym
   end
 
-  def line_wins?(line_coords)
+  def line_won?(line_coords)
     sym = self[line_coords.first]
     line_coords.all? { |coord| !self[coord].nil? && self[coord] == sym }
   end

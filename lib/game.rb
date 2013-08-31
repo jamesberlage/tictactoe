@@ -12,7 +12,7 @@ class Game
   end
 
   def over?
-    @board.winning_board? || @board.full?
+    @board.won? || @board.full?
   end
 
   def change_players(player)
@@ -37,7 +37,7 @@ class Game
   end
 
   def end_game
-    if @board.winning_board?
+    if @board.won?
       winner = @board.get_winning_symbol
       display_board
       puts "\n#{winner.to_s.capitalize} won!"

@@ -65,24 +65,47 @@ describe Board do
 
   describe "#winning_board?" do
 
+    it "identifies a winning board for X" do
+      test = Board.new([[nil, :o, nil],[nil, nil, :x],[:o, nil, :x]])
+      expect(test.winning_board?(:x)).to be_true
+    end
+
+    it "doesn't misidentify a board" do
+      test = Board.new([[nil, nil, :o],[nil, nil, :x],[nil, nil, nil]])
+      expect(test.winning_board?(:x)).to be_false
+    end
+
+  end
+
+  describe "#losing_board?" do
+
+    it "identifies a losing board for X" do
+      test = Board.new([[nil, :x, nil],[nil, :o, nil],[:o, nil, :x]])
+      expect(test.losing_board?(:x)).to be_true
+    end
+
+  end
+
+  describe "#won?" do
+
     it "finds a diagonal win" do
       test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :x]])
-      expect(test.winning_board?).to be_true
+      expect(test.won?).to be_true
     end
 
     it "finds a horizontal win" do
       test = Board.new([[:x, nil, :x],[:o, :o, :o],[nil, nil, :x]])
-      expect(test.winning_board?).to be_true
+      expect(test.won?).to be_true
     end
 
     it "finds a vertical win" do
       test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, :o]])
-      expect(test.winning_board?).to be_true
+      expect(test.won?).to be_true
     end
 
     it "returns false when the game is not won" do
       test = Board.new([[:x, nil, :o],[nil, :x, :o],[nil, nil, nil]])
-      expect(test.winning_board?).to be_false
+      expect(test.won?).to be_false
     end
 
   end
